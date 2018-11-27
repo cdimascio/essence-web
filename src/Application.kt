@@ -80,12 +80,12 @@ fun Application.module() {
     }
 
     routing {
-        get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-        }
+//        get("/") {
+//            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
+//        }
 
         // Static feature. Try to access `/static/ktor_logo.svg`
-        static("/static") {
+        static("/") {
             resources("static")
         }
 
