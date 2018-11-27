@@ -1,71 +1,64 @@
 .App {
-  /* min-height: 100vh; */
+  min-height: 100vh;
   display: flex;
-  flex: 0 0 100%;
-  /* flex-direction: column; */
-  align-items: center;
-  justify-content: center;
+  flex: 1 1 auto;
+  flex-direction: column;
+  /* align-items: center;
+  justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
 .search {
-  width: 80%
+  flex-grow: 1;
 }
 
-.search-button {
-  height: 2em;
-  color: white;
-  background-color: #434844;
-  border: 1px solid white;
-  border-radius: 5px;
-  margin-left: 5px;
+.essence {
+  position: absolute;
+  z-index: -1;
+  margin: auto;
+  margin-top: 200px;
+  left: 0;
+  right: 0;
+  width: 50%;
 }
 
 .search-box {
+  flex-grow: 1;
   padding: 10px;
-  width: 80%;
+  width: 100%;
   border: none;
   line-height: 2em;
   border-radius: 5px;
   margin-bottom: 5px;
+  box-sizing: border-box;
+}
+
+.error {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 16px;
+  background-color: #f79191;
+  color: black;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .extractor-result {
+  flex-grow: 1;
   background-color: #ffffff;
   color: black;
   border-radius: 5px;
   padding: 10px;
-  width: 80%;
+  /* width: 80%; */
 }
 
 pre {
   text-align: left;
-  font-size: 0.4em;
+  font-size: 12px;
   white-space: pre-wrap; /* Since CSS 2.1 */
   white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
   white-space: -pre-wrap; /* Opera 4-6 */
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word; /* Internet Explorer 5.5+ */
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

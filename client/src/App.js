@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import essence from './essence.png';
 import './App.css';
 
 class App extends Component {
@@ -18,25 +18,22 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <div>
+          <img src={essence} class="essence" />
+        </div>
         <div className="search">
-          {/* <form> */}
-          <label>url:</label>
-          <div>
+          <label>enter a url:</label>
+          <div class="search">
             <input
               type="text"
               name="url"
+              placeholder="enter a url"
               className="search-box"
               value={this.state.url}
               onChange={this.onTextChange}
               onKeyPress={this.onEnter}
             />
-            {/* <input
-              type="submit"
-              className="search-button"
-              value="Extract"
-              onClick={this.onUrlClick}
-            /> */}
-            {this.renderResponse()}
+            {this.state.error ? this.renderError() : this.renderResponse()}
           </div>
           {/* </form> */}
         </div>
@@ -57,12 +54,26 @@ class App extends Component {
   }
   onUrlClick(e) {
     console.log(`http://localhost:8080/extract?url=${this.state.url}`);
+    this.setState({
+      error: null,
+    });
     fetch(`http://localhost:8080/extract?url=${this.state.url}`)
-      .then(r => r.json())
+      .then(r => {
+        if (r.status !== 200) {
+          console.log(r);
+          throw Error(r.statusText);
+        }
+        return r.json();
+      })
       .then(r => {
         console.log(r);
         this.setState({
           result: r,
+        });
+      })
+      .catch(e => {
+        this.setState({
+          error: e,
         });
       });
     e.preventDefault();
@@ -72,6 +83,12 @@ class App extends Component {
       <div className="extractor-result">
         <pre>{JSON.stringify(this.state.result, null, '  ')}</pre>
       </div>
+    );
+  }
+
+  renderError() {
+    return !this.state.error ? null : (
+      <div className="error">{`Could not load url "${this.state.url}"`}</div>
     );
   }
 }
