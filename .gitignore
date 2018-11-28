@@ -6,3 +6,6 @@
 *.ipr
 *.iws
 resources/static/
+resources/static/asset-manifest.json
+resources/static/index.html
+resources/static/service-worker.js
