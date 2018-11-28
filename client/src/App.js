@@ -35,7 +35,6 @@ class App extends Component {
             />
             {this.state.error ? this.renderError() : this.renderResponse()}
           </div>
-          {/* </form> */}
         </div>
       </div>
     );
@@ -53,11 +52,11 @@ class App extends Component {
     });
   }
   onUrlClick(e) {
-    console.log(`http://localhost:8080/extract?url=${this.state.url}`);
+    // console.log(`http://localhost:8080/extract?url=${this.state.url}`);
     this.setState({
       error: null,
     });
-    fetch(`http://localhost:8080/extract?url=${this.state.url}`)
+    fetch(`/extract?url=${this.state.url}`)
       .then(r => {
         if (r.status !== 200) {
           console.log(r);
