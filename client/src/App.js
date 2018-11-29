@@ -9,6 +9,7 @@ class App extends Component {
     this.onTextChange = this.onTextChange.bind(this);
     this.onEnter = this.onEnter.bind(this);
     this.renderResponse = this.renderResponse.bind(this);
+    this.renderInProgress = this.renderInProgress.bind(this);
     this.state = {
       url: '',
       result: null,
@@ -25,6 +26,7 @@ class App extends Component {
           <label>enter a url:</label>
           <div class="search">
             <input
+              disabled={this.state.inProgress}
               type="text"
               name="url"
               placeholder="enter a url"
@@ -33,7 +35,12 @@ class App extends Component {
               onChange={this.onTextChange}
               onKeyPress={this.onEnter}
             />
-            {this.state.error ? this.renderError() : this.renderResponse()}
+            { this.state.inProgress
+                ? this.renderInProgress()
+                : this.state.error
+                    ? this.renderError()
+                    : this.renderResponse()
+            }
           </div>
         </div>
       </div>
@@ -55,6 +62,7 @@ class App extends Component {
     // console.log(`http://localhost:8080/extract?url=${this.state.url}`);
     this.setState({
       error: null,
+      inProgress: true,
     });
     fetch(`/extract?url=${this.state.url}`)
       .then(r => {
@@ -68,11 +76,13 @@ class App extends Component {
         console.log(r);
         this.setState({
           result: r,
+          inProgress: false,
         });
       })
       .catch(e => {
         this.setState({
           error: e,
+          inProgress: false,
         });
       });
     e.preventDefault();
@@ -89,6 +99,12 @@ class App extends Component {
     return !this.state.error ? null : (
       <div className="error">{`Could not load url "${this.state.url}"`}</div>
     );
+  }
+
+  renderInProgress() {
+      return (
+          <div className="in-progress">working...</div>
+      );
   }
 }
 
