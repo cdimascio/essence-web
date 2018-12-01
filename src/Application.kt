@@ -10,13 +10,19 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.request.get
 import io.ktor.features.*
+import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
-import io.ktor.http.content.*
+import io.ktor.http.content.defaultResource
+import io.ktor.http.content.resources
+import io.ktor.http.content.static
+import io.ktor.http.content.staticBasePackage
 import io.ktor.jackson.jackson
 import io.ktor.locations.Locations
+import io.ktor.request.receiveText
 import io.ktor.response.respond
 import io.ktor.routing.get
+import io.ktor.routing.post
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -80,7 +86,17 @@ fun Application.module() {
         }
 
         install(StatusPages) {}
+        post("/extract") {
+            val contentType = call.request.headers[HttpHeaders.ContentType] ?: ""
+            if (contentType != ContentType.Text.Html.toString()) throw badRequest("content-type text/html required")
+            val body = call.receiveText()
 
+            if (body.isBlank()) throw badRequest("html required")
+
+            val extracted = Essence.extract(body)
+
+            call.respond(extracted)
+        }
         get("/extract") {
             val url = call.request.queryParameters["url"] ?: throw badRequest("url query parameter required.")
 
