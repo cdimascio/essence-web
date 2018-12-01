@@ -13,6 +13,12 @@
   flex-grow: 1;
 }
 
+.github-button-custom {
+  position: absolute;
+  right: 40px;
+  top: 40px;
+}
+
 .in-progress {
   color: white;
   font-style: italic;

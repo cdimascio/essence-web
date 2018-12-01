@@ -19,6 +19,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <div className='github-button-custom'>
+            <a className='github-button' href="https://github.com/cdimascio/essence" data-icon="octicon-star" data-size="large" aria-label="Star cdimascio/essence on GitHub">Star</a>
+        </div>
         <div>
           <img src={essence} class="essence" />
         </div>
